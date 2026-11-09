@@ -1,0 +1,26 @@
+name: CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  validate-specs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Validate Markdown files
+        run: |
+          echo "Verifying markdown structure..."
+          test -f README.md
+          test -f LICENSE
+          test -f CONTRIBUTING.md
+          test -f SECURITY.md
+          test -f docs/architecture.md
+          test -f docs/provenance-model.md
+          test -f docs/threat-model.md
+          echo "All core documentation verified."
