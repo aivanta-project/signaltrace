@@ -7,20 +7,30 @@ on:
     branches: [ "main" ]
 
 jobs:
-  validate-specs:
+  test:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.11", "3.12"]
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Validate Markdown files
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install package and test runner
         run: |
-          echo "Verifying markdown structure..."
-          test -f README.md
-          test -f LICENSE
-          test -f CONTRIBUTING.md
-          test -f SECURITY.md
-          test -f docs/architecture.md
-          test -f docs/provenance-model.md
-          test -f docs/threat-model.md
-          echo "All core documentation verified."
+          python -m pip install --upgrade pip
+          pip install -e .
+
+      - name: Run unit test suite
+        run: |
+          python -m unittest discover tests
+
+      - name: Verify reference example trace
+        run: |
+          signaltrace verify examples/simple_agent_trace.json

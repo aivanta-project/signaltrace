@@ -1,0 +1,101 @@
+{
+  "version": "0.1.0-alpha",
+  "session_id": "session-demo-2026-001",
+  "receipt": {
+    "session_id": "session-demo-2026-001",
+    "root_hash": "1386b42ba530829fe907542e3addba2b35928db2fb52579479655c37dc887447",
+    "event_count": 5,
+    "leaf_ids": [
+      "18ee9001421e201b50caed502039cfce7053dcfa907a93be99861eddce776492"
+    ],
+    "root_signature": null,
+    "created_at": 1794291459.10268
+  },
+  "events": [
+    {
+      "event_id": "d0ec0a83486b1282b1e2f92b89ceb47ea873c63f7eb6d804159af7888f834c55",
+      "event_type": "prompt",
+      "actor": {
+        "actor_id": "user-01",
+        "role": "user",
+        "public_key": null
+      },
+      "payload": {
+        "query": "What is the weather in Nairobi today?"
+      },
+      "parent_ids": [],
+      "timestamp": 1762758000.0,
+      "attestation": null
+    },
+    {
+      "event_id": "3e81affd51d0af42f85791c019629a7eb88cc1cac0b565f4095ad6224bed6bde",
+      "event_type": "thought",
+      "actor": {
+        "actor_id": "agent-01",
+        "role": "agent",
+        "public_key": null
+      },
+      "payload": {
+        "plan": "User needs weather data for Nairobi. Invoke weather API."
+      },
+      "parent_ids": [
+        "d0ec0a83486b1282b1e2f92b89ceb47ea873c63f7eb6d804159af7888f834c55"
+      ],
+      "timestamp": 1762758001.0,
+      "attestation": null
+    },
+    {
+      "event_id": "1ab64f0ba4b8c98b27b4b55662f95df29e8cfb22e25fc669c01b8af584d15037",
+      "event_type": "tool_call",
+      "actor": {
+        "actor_id": "agent-01",
+        "role": "agent",
+        "public_key": null
+      },
+      "payload": {
+        "tool": "get_weather",
+        "location": "Nairobi, Kenya"
+      },
+      "parent_ids": [
+        "3e81affd51d0af42f85791c019629a7eb88cc1cac0b565f4095ad6224bed6bde"
+      ],
+      "timestamp": 1762758002.0,
+      "attestation": null
+    },
+    {
+      "event_id": "84f17bd882a11d7d0f93cf887f7b723912415732c4e6cf845cf5aa88f7227d99",
+      "event_type": "tool_result",
+      "actor": {
+        "actor_id": "weather-api",
+        "role": "tool_executor",
+        "public_key": null
+      },
+      "payload": {
+        "temperature_c": 99,
+        "conditions": "Partly Cloudy"
+      },
+      "parent_ids": [
+        "1ab64f0ba4b8c98b27b4b55662f95df29e8cfb22e25fc669c01b8af584d15037"
+      ],
+      "timestamp": 1762758003.0,
+      "attestation": null
+    },
+    {
+      "event_id": "18ee9001421e201b50caed502039cfce7053dcfa907a93be99861eddce776492",
+      "event_type": "response",
+      "actor": {
+        "actor_id": "agent-01",
+        "role": "agent",
+        "public_key": null
+      },
+      "payload": {
+        "text": "It is currently 24\u00b0C and partly cloudy in Nairobi."
+      },
+      "parent_ids": [
+        "84f17bd882a11d7d0f93cf887f7b723912415732c4e6cf845cf5aa88f7227d99"
+      ],
+      "timestamp": 1762758004.0,
+      "attestation": null
+    }
+  ]
+}

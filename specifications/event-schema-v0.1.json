@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aivanta-project.github.io/aivanta-project/specifications/event-schema-v0.1.json",
+  "title": "SignalTrace Event Schema v0.1",
+  "description": "Canonical schema definition for SignalTrace execution events and Merkle receipts.",
+  "type": "object",
+  "required": ["version", "session_id", "receipt", "events"],
+  "properties": {
+    "version": {
+      "type": "string",
+      "enum": ["0.1.0-alpha"]
+    },
+    "session_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "receipt": {
+      "type": "object",
+      "required": ["session_id", "root_hash", "event_count", "leaf_ids"],
+      "properties": {
+        "session_id": { "type": "string" },
+        "root_hash": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "event_count": { "type": "integer", "minimum": 0 },
+        "leaf_ids": {
+          "type": "array",
+          "items": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+        },
+        "root_signature": { "type": ["string", "null"] },
+        "created_at": { "type": "number" }
+      }
+    },
+    "events": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["event_id", "event_type", "actor", "payload", "parent_ids", "timestamp"],
+        "properties": {
+          "event_id": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+          "event_type": {
+            "type": "string",
+            "enum": ["prompt", "thought", "tool_call", "tool_result", "state_mutation", "response"]
+          },
+          "actor": {
+            "type": "object",
+            "required": ["actor_id", "role"],
+            "properties": {
+              "actor_id": { "type": "string" },
+              "role": { "type": "string" },
+              "public_key": { "type": ["string", "null"] }
+            }
+          },
+          "payload": { "type": "object" },
+          "parent_ids": {
+            "type": "array",
+            "items": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+          },
+          "timestamp": { "type": "number" },
+          "attestation": { "type": ["string", "null"] }
+        }
+      }
+    }
+  }
+}
